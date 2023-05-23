@@ -6,13 +6,13 @@ post_metodo="https://tierra-nativa-api.eium.com.mx/api/examen-U3/create-product-
 
 #  POST
 send_post_request() {
-  local matricula="$1"
-  local name="$2"
-  local description="$3"
-  local fecha="$4"
+  local name="$1"
+  local descripcion="$2"
+  local fecha="$3"
+  local matricula="$4"
   curl -X POST -H "Content-Type: application/json" -d '{
     "name": "'"$name"'",
-    "description": "'"$description"'",
+    "descripcion": "'"$descripcion"'",
     "fecha": "'"$"fecha'",
     "user": "'"$matricula"'"
   }' "$post_metodo"
@@ -20,7 +20,7 @@ send_post_request() {
 
 # Función de get
 send_get_request() {
-  local matricula="$1"
+  local matricula="$4"
   response=$(curl -s "$get_metodo$matricula")
   #JASONXD
   echo "$response" > products.json
@@ -36,14 +36,14 @@ while true; do
   read option
   case $option in
     1)
-      echo "Ingrese la matrícula del alumno:"
-      read matricula
-      echo "Ingrese el nombre del producto (máximo 100 caracteres):"
-      read name
-      echo "Ingrese la descripción del producto (máximo 150 caracteres):"
-      read description
+      echo "Ingrese su nombre del producto"
+      read  name
+      echo "Ingrese descripción del producto"
+      read  descripcion
       fecha=$(date "+%Y-%m-%d")
-      send_post_request "$matricula" "$name" "$description" "$fecha"
+      echo "ingrese su matriculla"
+      read matricula
+      send_post_request "$name" "$descripcion" "$fecha" "$matricula"
       echo "Solicitud POST realizada con éxito."
       ;;
     2)
