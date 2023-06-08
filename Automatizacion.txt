@@ -1,0 +1,16 @@
+#!/bin/bash
+
+response=$(curl -X POST -H "Content-Type: application/json" -d '{"user":"luis@gmail.com", "password":"1234"}' https://tierra-nativa-api.eium.com.mx/api/ordinario-so/logIn)
+
+token=$(echo $response | jq -r '.token')
+
+if [[ -z "$token" ]]; then
+    echo "Inicio de sesión fallido. Credenciales incorrectas."
+    exit 1
+fi
+
+filename="mis-archivos-$(date +"%Y-%m-%d-%H-%M-%S").txt"
+
+curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer $token" https://tierra-nativa-api.eium.com.mx/api/ordinario-so/get-products/matricula > CRONS/$filename
+
+chmod 777 CRONS/$filename
