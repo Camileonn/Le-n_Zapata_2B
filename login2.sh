@@ -42,9 +42,7 @@ archivoproductos() {
 
 # CREARPRODUCTOS
 crear(){
-
-    while true; do
-        read -p "Ingrese su token o SALIR para regresar al menu " token
+while true; do
         read -p "Ingrese su token o SALIR para regresar al menu " token
         if [ "$token" = "SALIR" ]; then
             break
@@ -54,7 +52,6 @@ crear(){
         read -p "Ingrese la matrícula del usuario: " matriculauser
         read -p "Ingrese el precio del producto: " preciop
 
-        # Construir el JSON de datos del producto
         local json='{
             "name": "'"$nombrep"'",
             "description": "'"$descripcionp"'",
@@ -63,8 +60,7 @@ crear(){
             "price": "'"$preciop"'"
           }'
 
-        # Enviar la solicitud POST con el token en el encabezado y guardar el resultado en el archivo
-        curl -X POST -H "Authorization: Bearer $token" -H "Content-Type: application/json" -d "$json" https://tierra-nativa-api.eium.com.mx/api/ordinario-so/create-product >> "$txtproductos"
+        curl -X POST -H "Authorization: Bearer $token" -H "Content-Type: application/json" -d "$json"" https://tierra-nativa-api.eium.com.mx/api/ordinario-so/create-product" >> "$txtproductos"
     done
 }
 
@@ -84,7 +80,6 @@ hacer_archivocopia() {
 
 
 
-# Función para mostrar el menú de opciones
 menu() {
     while true; do
         echo ".............MENU PRINCIPAL...................."
@@ -93,7 +88,6 @@ menu() {
         echo "2. Iniciar sesión"
         echo "3. Crear un producto"
         echo "4. SALIR"
-
         read -p "Seleccione una opción: " option
 
         case $option in
@@ -118,6 +112,5 @@ menu() {
 }
 
 menu
-
 
 
